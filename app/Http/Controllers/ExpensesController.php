@@ -31,8 +31,10 @@ class ExpensesController extends Controller
         ]);
     }
 
-    public function show(Expense $expense)
+    public function show($id)
     {
+        $expense = Expense::findOrFail($id);
+
         return response()->json([
             'data' => $expense->toArray(),
             'status' => 'success',
@@ -49,8 +51,10 @@ class ExpensesController extends Controller
         ], 201);
     }
 
-    public function update(Expense $expense)
+    public function update($id)
     {
+        $expense = Expense::findOrFail($id);
+
         $expense->update($this->request->all());
 
         return response()->json([
@@ -59,8 +63,10 @@ class ExpensesController extends Controller
         ], 201);
     }
 
-    public function delete(Expense $expense)
+    public function delete($id)
     {
+        $expense = Expense::findOrFail($id);
+
         $expense->delete();
 
         return response()->json([
