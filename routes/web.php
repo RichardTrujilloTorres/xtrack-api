@@ -15,25 +15,16 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+/**
+ * Expenses
+ */
 $router->group([
     'prefix' => 'api',
-    // 'as' => 'api.',
+    'middleware' => 'auth',
 ], function() use($router) {
-
-    /**
-     * Authentication
-     */
-    $router->post('login', 'AuthController@login');
-    $router->post('logout', 'AuthController@logout');
-    $router->post('refresh', 'AuthController@refresh');
-    $router->post('me', 'AuthController@me');
-
-    /**
-     * Expenses
-     */
     $router->group([
         'prefix' => 'expenses',
-        ], function() use($router) {
+    ], function() use($router) {
 
         $router->get('/', 'ExpensesController@index');
         $router->get('/{expense}', 'ExpensesController@show');
@@ -41,6 +32,20 @@ $router->group([
         $router->post('/', 'ExpensesController@store');
         $router->delete('/{expense}', 'ExpensesController@delete');
     });
+});
+
+
+
+/**
+ * Authentication
+ */
+$router->group([
+    'prefix' => 'auth',
+], function() use($router) {
+    $router->post('login', 'AuthController@login');
+    $router->post('logout', 'AuthController@logout');
+    $router->post('refresh', 'AuthController@refresh');
+    $router->post('me', 'AuthController@me');
 });
 
 
