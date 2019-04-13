@@ -43,6 +43,7 @@ $router->group([
     // 'middleware' => 'auth', // TODO after FE resource building w/ proper auth headers setup
 ], function() use($router) {
     $router->get('/stats/by-category', 'StatsController@byCategory');
+    $router->get('/stats/by-month', 'StatsController@byMonth');
 });
 
 /**
