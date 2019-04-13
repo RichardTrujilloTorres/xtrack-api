@@ -30,4 +30,17 @@ class StatsController extends Controller
             'status' => 'success',
         ]);
     }
+
+    public function byMonth()
+    {
+        $expenses = DB::table('expenses')
+            ->select('category', DB::raw('SUM(denomination) as total'),DB::raw('MONTH(created_at) as month'))
+            ->groupBy('category', 'month')
+            ->get();
+
+        return response()->json([
+            'data' => $expenses,
+            'status' => 'success',
+        ]);
+    }
 }
