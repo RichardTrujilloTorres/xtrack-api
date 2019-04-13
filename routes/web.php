@@ -35,6 +35,15 @@ $router->group([
 });
 
 
+/**
+ * Stats
+ */
+$router->group([
+    'prefix' => 'api',
+    // 'middleware' => 'auth', // TODO after FE resource building w/ proper auth headers setup
+], function() use($router) {
+    $router->get('/stats/by-category', 'StatsController@byCategory');
+});
 
 /**
  * Authentication
