@@ -14,9 +14,6 @@ class ExpensesController extends Controller
      */
     public function __construct(Request $request)
     {
-        // TODO
-        // $this->middleware('auth:api');
-
         $this->request = $request;
     }
 
