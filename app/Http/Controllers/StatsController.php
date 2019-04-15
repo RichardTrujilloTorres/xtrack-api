@@ -74,8 +74,8 @@ class StatsController extends Controller
 
 
         $data = [
-            compact('highestExpense'),
-            compact('highestCategory'),
+            'highestExpense' => $highestExpense,
+            'highestCategory' => $highestCategory,
         ];
 
         return response()->json([
