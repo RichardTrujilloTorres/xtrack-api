@@ -44,6 +44,7 @@ $router->group([
 ], function() use($router) {
     $router->get('/stats/by-category', 'StatsController@byCategory');
     $router->get('/stats/by-month', 'StatsController@byMonth');
+    $router->get('/stats/by-day', 'StatsController@byDay');
 });
 
 /**
