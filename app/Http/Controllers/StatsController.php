@@ -43,4 +43,17 @@ class StatsController extends Controller
             'status' => 'success',
         ]);
     }
+
+    public function byDay()
+    {
+        $expenses = DB::table('expenses')
+            ->select(DB::raw('DATE(created_at) as day'), DB::raw('SUM(denomination) as total'))
+            ->groupBy('day')
+            ->get();
+
+        return response()->json([
+            'data' => $expenses,
+            'status' => 'success',
+        ]);
+    }
 }
