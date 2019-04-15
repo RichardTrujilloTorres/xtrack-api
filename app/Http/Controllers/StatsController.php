@@ -56,4 +56,31 @@ class StatsController extends Controller
             'status' => 'success',
         ]);
     }
+
+    public function monthlySummary()
+    {
+        $highestExpense = DB::table('expenses')
+            ->select('description', DB::raw('CAST(denomination AS DECIMAL(5,2)) as denomination'), 'category')
+            ->where(DB::raw('MONTH(created_at)'), DB::raw('MONTH(CURRENT_DATE())'))
+            ->where(DB::raw('YEAR(created_at)'), DB::raw('YEAR(CURRENT_DATE())'))
+            ->orderBy('denomination', 'desc')
+            ->first();
+
+        $highestCategory = DB::table('expenses')
+            ->select('category', DB::raw('SUM(denomination) as total'))
+            ->groupBy('category')
+            ->orderBy('total', 'desc')
+            ->first();
+
+
+        $data = [
+            compact('highestExpense'),
+            compact('highestCategory'),
+        ];
+
+        return response()->json([
+            'data' => $data,
+            'status' => 'success',
+        ]);
+    }
 }
