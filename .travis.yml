@@ -4,7 +4,6 @@ php: 7.1
 
 before_script:
   - cp .env.travis .env
-  - mysql -e 'create database xtrack;'
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction
 
