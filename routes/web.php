@@ -12,7 +12,10 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return response()->json([
+        'status' => 'success',
+        'data' => 'All good',
+    ]);
 });
 
 /**
@@ -40,7 +43,7 @@ $router->group([
  */
 $router->group([
     'prefix' => 'api',
-    // 'middleware' => 'auth', // TODO after FE resource building w/ proper auth headers setup
+    'middleware' => 'auth', // TODO after FE resource building w/ proper auth headers setup
 ], function() use($router) {
     $router->get('/stats/by-category', 'StatsController@byCategory');
     $router->get('/stats/by-month', 'StatsController@byMonth');
@@ -59,56 +62,4 @@ $router->group([
     $router->post('refresh', 'AuthController@refresh');
     $router->post('me', 'AuthController@me');
 });
-
-
-
-
-
-
-$router->get('/dummy', function () use ($router) {
-    // TODO seeders
-    /*
-    $user = \App\User::create([
-        'email' => 'richard.trujillo.torres@gmail.com',
-        // 'password' => \Illuminate\Support\Facades\Hash::make('secret'),
-        'password' => app('hash')->make('secret'),
-    ]);
-
-
-    dd($user);
-    */
-
-
-
-
-
-
-
-
-
-    // check hash
-    // $hash = \Illuminate\Support\Facades\Hash::make('secret');
-    $hash = app('hash')->make('secret');
-    $user = \App\User::findOrFail(3);
-
-    dump($user->password);
-    dump($hash);
-    dd($user->password == $hash);
-
-});
-
-// test resource
-$router->group([
-    'prefix' => 'api',
-    'middleware' => 'auth',
-    // 'as' => 'api.',
-], function() use($router) {
-    $router->get('/', function() {
-        return response()->json([
-            'status' => 'succeeeess',
-            'data' => 'All good',
-        ]);
-    });
-});
-
 
