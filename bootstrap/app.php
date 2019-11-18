@@ -30,6 +30,7 @@ $app->withFacades(true, [
 $app->withEloquent();
 
 $app->configure('cors');
+$app->configure('scout');
 
 /*
 |--------------------------------------------------------------------------
@@ -82,12 +83,16 @@ $app->routeMiddleware([
 |
 */
 
+// 'app.path' fix:
+$app->instance('path.config', app()->basePath() . DIRECTORY_SEPARATOR . 'config');
+
 // $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(\Barryvdh\Cors\ServiceProvider::class);
 $app->register(\Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(\Laravel\Scout\ScoutServiceProvider::class);
 
 
 /*
