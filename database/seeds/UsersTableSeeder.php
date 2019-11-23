@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
     {
         \App\User::create([
             'email' => 'test@test.com',
-            'password' => encrypt('secret'),
+            'password' => app()->make('hash')->make('secret'),
         ]);
     }
 }
