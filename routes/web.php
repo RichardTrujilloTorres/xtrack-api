@@ -1,16 +1,8 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
-|
-*/
-
+/**
+ * Welcome
+ */
 $router->get('/', function () use ($router) {
     return response()->json([
         'status' => 'success',
@@ -43,7 +35,7 @@ $router->group([
  */
 $router->group([
     'prefix' => 'api',
-    'middleware' => 'auth', // TODO after FE resource building w/ proper auth headers setup
+    'middleware' => 'auth',
 ], function() use($router) {
     $router->get('/stats/by-category', 'StatsController@byCategory');
     $router->get('/stats/by-month', 'StatsController@byMonth');
