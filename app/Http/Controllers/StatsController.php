@@ -2,25 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class StatsController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     public function byCategory()
     {
         $expenses = DB::table('expenses')
             ->select('category', DB::raw('SUM(denomination) as total'))
+            ->where(DB::raw('YEAR(created_at)'), DB::raw('YEAR(CURRENT_DATE())'))
             ->groupBy('category')
             ->get();
 
@@ -35,6 +26,7 @@ class StatsController extends Controller
     {
         $expenses = DB::table('expenses')
             ->select('category', DB::raw('SUM(denomination) as total'),DB::raw('MONTH(created_at) as month'))
+            ->where(DB::raw('YEAR(created_at)'), DB::raw('YEAR(CURRENT_DATE())'))
             ->groupBy('category', 'month')
             ->get();
 
@@ -48,6 +40,7 @@ class StatsController extends Controller
     {
         $expenses = DB::table('expenses')
             ->select(DB::raw('DATE(created_at) as day'), DB::raw('SUM(denomination) as total'))
+            ->where(DB::raw('YEAR(created_at)'), DB::raw('YEAR(CURRENT_DATE())'))
             ->groupBy('day')
             ->get();
 
