@@ -34,7 +34,7 @@ class ExpensesController extends Controller
         $expense = Expense::findOrFail($id);
 
         return response()->json([
-            'data' => $expense->toArray(),
+            'data' => $expense,
             'status' => 'success',
         ]);
     }
@@ -44,7 +44,7 @@ class ExpensesController extends Controller
         $expense = Expense::create($this->request->all());
 
         return response()->json([
-            'data' => $expense->toArray(),
+            'data' => $expense,
             'status' => 'success',
         ], 201);
     }
@@ -56,7 +56,7 @@ class ExpensesController extends Controller
         $expense->update($this->request->all());
 
         return response()->json([
-            'data' => $expense->toArray(),
+            'data' => $expense,
             'status' => 'success',
         ], 201);
     }
