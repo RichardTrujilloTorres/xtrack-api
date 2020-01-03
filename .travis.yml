@@ -9,6 +9,7 @@ before_script:
   - mysql -e 'create database if not exists xtrack_test;'
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction
+  - php artisan jwt:secret
 
 services: mysql
 
