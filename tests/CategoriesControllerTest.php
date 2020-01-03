@@ -33,7 +33,8 @@ class CategoriesControllerTest extends TestCase
             'password' => 'secret',
         ]);
 
-        $this->token = json_decode($response->getContent())->access_token;
+//        $this->token = json_decode($response->getContent())->access_token;
+        dd($response->getContent());
     }
 
     /**
