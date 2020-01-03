@@ -4,6 +4,7 @@ php: 7.1
 
 before_script:
   - cp .env.travis .env
+  - cp phpunit.travis.xml phpunit.xml
   - sudo service mysql start
   - mysql -e 'create database if not exists xtrack_test;'
   - travis_retry composer self-update
