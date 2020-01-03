@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Expense;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,22 @@ class ExpensesController extends Controller
 
     public function store()
     {
-        $expense = Expense::create($this->request->all());
+        $this->validate($this->request, [
+            'denomination' => 'required',
+        ]);
+
+        /**
+         * @var Category $category
+         */
+        $category = Category::findOrFail(@$this->request->category['slug']);
+
+        /**
+         * @var Expense $expense
+         */
+        $expense = Expense::create(array_merge(
+            $this->request->all(),
+            ['category' => $category]
+        ));
 
         return response()->json([
             'data' => $expense,
