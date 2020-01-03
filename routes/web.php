@@ -29,6 +29,25 @@ $router->group([
     });
 });
 
+/**
+ * Categories
+ */
+$router->group([
+    'prefix' => 'api',
+    'middleware' => 'auth',
+], function() use($router) {
+    $router->group([
+        'prefix' => 'categories',
+    ], function() use($router) {
+
+        $router->get('/', 'CategoriesController@index');
+        $router->get('/{slug}', 'CategoriesController@show');
+        $router->put('/{slug}', 'CategoriesController@update');
+        $router->post('/', 'CategoriesController@store');
+        $router->delete('/{slug}', 'CategoriesController@delete');
+    });
+});
+
 
 /**
  * Stats
