@@ -17,6 +17,7 @@
         "fzaninotto/faker": "^1.4",
         "laravel/tinker": "^1.0",
         "mockery/mockery": "^1.0",
+        "phpstan/phpstan": "^0.12.3",
         "phpunit/phpunit": "^7.0"
     },
     "autoload": {
