@@ -4,8 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Expense;
 
+/**
+ * Class StatsController
+ * @package App\Http\Controllers
+ */
 class StatsController extends Controller
 {
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function byCategory()
     {
         $expenses = Expense::byCategory()->get();
@@ -16,6 +23,9 @@ class StatsController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function byMonth()
     {
         $expenses = Expense::byMonth()->get();
@@ -26,6 +36,9 @@ class StatsController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function byDay()
     {
         $expenses = Expense::byDay()->get();
@@ -36,6 +49,9 @@ class StatsController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function monthlySummary()
     {
         $highestExpense = Expense::highest()->get()[0];
