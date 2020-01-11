@@ -82,4 +82,56 @@ class AuthControllerTest extends TestCase
             'token_type' => 'bearer',
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function logout()
+    {
+        $this->call('POST', '/auth/login', [
+            'email' => $this->user->email,
+            'password' => 'secret',
+        ]);
+
+        $this->assertResponseOk();
+
+        $content = json_decode($this->response->getContent(), true);
+
+        $this->call('POST', '/auth/logout', [], [
+            [
+            'Authorization' => 'Bearer ' . $content['access_token'],
+            ]
+        ]);
+
+        $this->assertResponseOk();
+    }
+
+    /**
+     * @test
+     */
+    public function refresh()
+    {
+        $this->call('POST', '/auth/login', [
+            'email' => $this->user->email,
+            'password' => 'secret',
+        ]);
+
+        $this->assertResponseOk();
+
+        $content = json_decode($this->response->getContent(), true);
+        $token = $content['access_token'];
+
+        $this->call('POST', '/auth/refresh', [], [
+            [
+                'Authorization' => 'Bearer ' . $token,
+            ]
+        ]);
+
+        $this->assertResponseOk();
+
+        $content = json_decode($this->response->getContent(), true);
+        $newToken = $content['access_token'];
+
+        $this->assertFalse($token === $newToken);
+    }
 }
