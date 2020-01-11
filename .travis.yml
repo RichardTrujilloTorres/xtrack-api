@@ -13,4 +13,10 @@ before_script:
 
 services: mysql
 
-script: vendor/bin/phpunit
+jobs:
+  include:
+    - stage: CodeSniffer
+      script: composer sniffer
+    - stage: tests
+      script: vendor/bin/phpunit
+
