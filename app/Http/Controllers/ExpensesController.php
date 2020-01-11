@@ -82,6 +82,6 @@ class ExpensesController extends Controller
 
         $expense->delete();
 
-        return $this->success([], Response::HTTP_OK);
+        return $this->success([], Response::HTTP_CREATED);
     }
 }
