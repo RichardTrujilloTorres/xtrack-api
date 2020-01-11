@@ -9,6 +9,7 @@ build:
     coverage:
       tests:
         override:
+          - command: php artisan jwt:generate
           - command: ./vendor/bin/phpunit --coverage-clover="coverage.xml"
             coverage:
               file: coverage.xml   # <- Set this to where we find the coverage data.
