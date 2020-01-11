@@ -21,5 +21,4 @@ class Category extends Model
         'needed',
         'slug',
     ];
-
 }
