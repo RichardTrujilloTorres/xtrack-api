@@ -19,7 +19,8 @@
         "laravel/tinker": "^1.0",
         "mockery/mockery": "^1.0",
         "phpstan/phpstan": "^0.12.3",
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^7.0",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "classmap": [
@@ -39,7 +40,11 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
-        "test:coverage": "./vendor/bin/phpunit --coverage-clover='coverage.xml'"
+        "test:coverage": "./vendor/bin/phpunit --coverage-clover='coverage.xml'",
+        "sniffer": [
+          "./vendor/bin/phpcs --standard=PSR2 app/",
+          "./vendor/bin/phpcbf --standard=PSR2 app/"
+        ]
     },
     "config": {
         "preferred-install": "dist",
