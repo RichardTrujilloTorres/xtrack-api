@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use App\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
@@ -45,11 +47,14 @@ class CategoriesControllerTest extends TestCase
          * @var \App\Category[] $categories
          */
         $categories = factory(\App\Category::class, 10)->create();
-        $response = $this->json('GET', '/api/categories',
+        $response = $this->json(
+            'GET',
+            '/api/categories',
             [],
             [
                 'Authorization' => 'Bearer ' . $this->token,
-            ]);
+            ]
+        );
 
         $response->assertResponseOk();
 
@@ -67,11 +72,14 @@ class CategoriesControllerTest extends TestCase
          * @var \App\Category
          */
         $category = factory(\App\Category::class)->create();
-        $response = $this->json('GET', '/api/categories/' . $category->slug,
+        $response = $this->json(
+            'GET',
+            '/api/categories/' . $category->slug,
             [],
             [
                 'Authorization' => 'Bearer ' . $this->token,
-            ]);
+            ]
+        );
 
         $response->assertResponseOk();
 
@@ -85,11 +93,14 @@ class CategoriesControllerTest extends TestCase
      */
     public function returns404OnCategoryNotFound()
     {
-        $response = $this->json('GET', '/api/categories/not-found',
+        $response = $this->json(
+            'GET',
+            '/api/categories/not-found',
             [],
             [
                 'Authorization' => 'Bearer ' . $this->token,
-            ]);
+            ]
+        );
 
         $response
             ->assertResponseStatus(404);
@@ -100,11 +111,14 @@ class CategoriesControllerTest extends TestCase
      */
     public function returns422OnInvalidRequest()
     {
-        $response = $this->json('POST', '/api/categories',
+        $response = $this->json(
+            'POST',
+            '/api/categories',
             [],
             [
                 'Authorization' => 'Bearer ' . $this->token,
-            ]);
+            ]
+        );
 
         $response
             ->assertResponseStatus(422);
@@ -117,12 +131,16 @@ class CategoriesControllerTest extends TestCase
         $response
             ->assertResponseStatus(201);
 
-        $this->json('POST', '/api/categories', [
+        $this->json(
+            'POST',
+            '/api/categories',
+            [
             'name' => 'dummy category',
             ],
             [
                 'Authorization' => 'Bearer ' . $this->token,
-            ]);
+            ]
+        );
 
         $response
             ->assertResponseStatus(422);
@@ -133,25 +151,33 @@ class CategoriesControllerTest extends TestCase
      */
     public function itCreatesTheSlugWhenNotSpecified()
     {
-        $this->json('POST', '/api/categories', [
+        $this->json(
+            'POST',
+            '/api/categories',
+            [
             'name' => 'dummy category',
             'slug' => '',
-        ],
-        [
+            ],
+            [
             'Authorization' => 'Bearer ' . $this->token,
-        ]);
+            ]
+        );
 
         $this->assertResponseStatus(201);
         $this->seeJsonContains([
             'slug' => \Illuminate\Support\Str::slug('dummy category')
         ]);
 
-        $this->json('POST', '/api/categories', [
+        $this->json(
+            'POST',
+            '/api/categories',
+            [
             'name' => 'dummy category again',
-        ],
-        [
+            ],
+            [
             'Authorization' => 'Bearer ' . $this->token,
-        ]);
+            ]
+        );
 
         $this->assertResponseStatus(201);
         $this->seeJsonContains([
@@ -164,14 +190,18 @@ class CategoriesControllerTest extends TestCase
      */
     public function store()
     {
-        $this->json('POST', '/api/categories', [
+        $this->json(
+            'POST',
+            '/api/categories',
+            [
             'name' => 'dummy category',
             'description' => 'Dummy description.',
             'slug' => 'some slug',
-        ],
-        [
+            ],
+            [
             'Authorization' => 'Bearer ' . $this->token,
-        ]);
+            ]
+        );
 
         $this->assertResponseStatus(201);
         $this->seeJsonContains([
@@ -186,12 +216,16 @@ class CategoriesControllerTest extends TestCase
      */
     public function updateReturns404OnCategoryNotFound()
     {
-        $response = $this->json('PUT', '/api/categories/not-found', [
+        $response = $this->json(
+            'PUT',
+            '/api/categories/not-found',
+            [
             'name' => 'dummy name',
-        ],
-        [
+            ],
+            [
             'Authorization' => 'Bearer ' . $this->token,
-        ]);
+            ]
+        );
 
         $response
             ->assertResponseStatus(404);
@@ -206,12 +240,16 @@ class CategoriesControllerTest extends TestCase
          * @var \App\Category $category
          */
         $category = factory(\App\Category::class)->create();
-        $this->json('PUT', '/api/categories/' . $category->slug, [
+        $this->json(
+            'PUT',
+            '/api/categories/' . $category->slug,
+            [
             'name' => $category->name,
-        ],
-        [
+            ],
+            [
             'Authorization' => 'Bearer ' . $this->token,
-        ]);
+            ]
+        );
 
         $this->assertResponseStatus(422);
     }
@@ -225,12 +263,16 @@ class CategoriesControllerTest extends TestCase
          * @var \App\Category $category
          */
         $category = factory(\App\Category::class)->create();
-        $this->json('PUT', '/api/categories/' . $category->slug, [
+        $this->json(
+            'PUT',
+            '/api/categories/' . $category->slug,
+            [
             'name' => 'updated',
-        ],
-        [
+            ],
+            [
             'Authorization' => 'Bearer ' . $this->token,
-        ]);
+            ]
+        );
 
         $this->assertResponseStatus(201);
         $this->seeJsonContains([
@@ -245,11 +287,14 @@ class CategoriesControllerTest extends TestCase
      */
     public function deleteReturn404OnNotFoundCategory()
     {
-        $response = $this->json('GET', '/api/categories/not-found',
-        [],
-        [
+        $response = $this->json(
+            'GET',
+            '/api/categories/not-found',
+            [],
+            [
             'Authorization' => 'Bearer ' . $this->token,
-        ]);
+            ]
+        );
 
         $response
             ->assertResponseStatus(404);
@@ -264,11 +309,14 @@ class CategoriesControllerTest extends TestCase
          * @var \App\Category $category
          */
         $category = factory(\App\Category::class)->create();
-        $this->json('DELETE', '/api/categories/' . $category->slug,
-        [],
-        [
+        $this->json(
+            'DELETE',
+            '/api/categories/' . $category->slug,
+            [],
+            [
             'Authorization' => 'Bearer ' . $this->token,
-        ]);
+            ]
+        );
 
 
         $this->assertResponseStatus(201);
