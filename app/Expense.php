@@ -50,7 +50,7 @@ class Expense extends Model
     public function scopeByMonth($query)
     {
         return $query
-            ->select('category', DB::raw('SUM(denomination) as total'),DB::raw('MONTH(created_at) as month'))
+            ->select('category', DB::raw('SUM(denomination) as total'), DB::raw('MONTH(created_at) as month'))
             ->where(DB::raw('YEAR(created_at)'), DB::raw('YEAR(CURRENT_DATE())'))
             ->groupBy('category', 'month')
             ;
