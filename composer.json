@@ -38,7 +38,8 @@
     "scripts": {
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ]
+        ],
+        "test:coverage": "./vendor/bin/phpunit --coverage-clover='coverage.xml'"
     },
     "config": {
         "preferred-install": "dist",
