@@ -26,3 +26,11 @@ $factory->define(\App\Category::class, function (Faker\Generator $faker) {
         'needed' => $faker->boolean,
     ];
 });
+
+$factory->define(\App\Expense::class, function (Faker\Generator $faker) {
+    return [
+        'denomination' => $faker->numberBetween(1, 100),
+        'description' => $faker->sentence,
+//        'category' => $faker->numberBetween(1, 3),
+    ];
+});
