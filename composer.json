@@ -42,8 +42,8 @@
         ],
         "test:coverage": "./vendor/bin/phpunit --coverage-clover='coverage.xml'",
         "sniffer": [
-          "./vendor/bin/phpcs --standard=PSR2 app/",
-          "./vendor/bin/phpcbf --standard=PSR2 app/"
+          "./vendor/bin/phpcbf --standard=PSR2 app tests",
+          "./vendor/bin/phpcs --standard=PSR2 --report=full app tests"
         ]
     },
     "config": {
