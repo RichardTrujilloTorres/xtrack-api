@@ -1,5 +1,9 @@
 build:
   nodes:
+    tests:
+      environment:
+        php:
+          version: 7.3
     coverage:
       tests:
         override:
