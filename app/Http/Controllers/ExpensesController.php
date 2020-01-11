@@ -13,9 +13,13 @@ class ExpensesController extends Controller
     use ResponsesTrait;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * @var Request
+     */
+    private $request;
+
+    /**
+     * ExpensesController constructor.
+     * @param Request $request
      */
     public function __construct(Request $request)
     {
