@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Traits\ResponsesTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CategoriesController
@@ -12,6 +14,8 @@ use Illuminate\Support\Str;
  */
 class CategoriesController extends Controller
 {
+    use ResponsesTrait;
+
     /**
      * @var Request
      */
@@ -33,10 +37,8 @@ class CategoriesController extends Controller
     {
         $categories = Category::all();
 
-        return response()->json([
-            'data' => $categories->toArray(),
-            'status' => 'success',
-        ]);
+
+        return $this->success($categories->toArray());
     }
 
     /**
@@ -47,10 +49,7 @@ class CategoriesController extends Controller
     {
         $category = Category::findOrFail($slug);
 
-        return response()->json([
-            'data' => $category,
-            'status' => 'success',
-        ]);
+        return $this->success($category);
     }
 
     /**
@@ -72,10 +71,7 @@ class CategoriesController extends Controller
             ['slug' => $slug]
         ));
 
-        return response()->json([
-            'data' => $category,
-            'status' => 'success',
-        ], 201);
+        return $this->success($category, Response::HTTP_CREATED);
     }
 
     /**
@@ -93,10 +89,7 @@ class CategoriesController extends Controller
 
         $category->update($this->request->all());
 
-        return response()->json([
-            'data' => $category,
-            'status' => 'success',
-        ], 201);
+        return $this->success($category, Response::HTTP_CREATED);
     }
 
     /**
@@ -109,9 +102,6 @@ class CategoriesController extends Controller
 
         $category->delete();
 
-        return response()->json([
-            'data' => [],
-            'status' => 'success',
-        ], 201);
+        return $this->success([], Response::HTTP_CREATED);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Expense;
+use App\Http\Traits\ResponsesTrait;
 
 /**
  * Class StatsController
@@ -10,6 +11,8 @@ use App\Expense;
  */
 class StatsController extends Controller
 {
+    use ResponsesTrait;
+
     /**
      * @return \Illuminate\Http\JsonResponse
      */
@@ -17,10 +20,7 @@ class StatsController extends Controller
     {
         $expenses = Expense::byCategory()->get();
 
-        return response()->json([
-            'data' => $expenses,
-            'status' => 'success',
-        ]);
+        return $this->success($expenses);
     }
 
     /**
@@ -30,10 +30,7 @@ class StatsController extends Controller
     {
         $expenses = Expense::byMonth()->get();
 
-        return response()->json([
-            'data' => $expenses,
-            'status' => 'success',
-        ]);
+        return $this->success($expenses);
     }
 
     /**
@@ -43,10 +40,7 @@ class StatsController extends Controller
     {
         $expenses = Expense::byDay()->get();
 
-        return response()->json([
-            'data' => $expenses,
-            'status' => 'success',
-        ]);
+        return $this->success($expenses);
     }
 
     /**
@@ -63,9 +57,6 @@ class StatsController extends Controller
             'highestCategory' => $highestCategory,
         ];
 
-        return response()->json([
-            'data' => $data,
-            'status' => 'success',
-        ]);
+        return $this->success($data);
     }
 }

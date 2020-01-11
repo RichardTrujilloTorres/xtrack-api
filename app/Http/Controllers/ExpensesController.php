@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Expense;
+use App\Http\Traits\ResponsesTrait;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExpensesController extends Controller
 {
+    use ResponsesTrait;
+
     /**
      * Create a new controller instance.
      *
@@ -34,10 +38,7 @@ class ExpensesController extends Controller
     {
         $expense = Expense::findOrFail($id);
 
-        return response()->json([
-            'data' => $expense,
-            'status' => 'success',
-        ]);
+        return $this->success($expense);
     }
 
     public function store()
@@ -59,10 +60,7 @@ class ExpensesController extends Controller
             ['category' => $category]
         ));
 
-        return response()->json([
-            'data' => $expense,
-            'status' => 'success',
-        ], 201);
+        return $this->success($expense, Response::HTTP_CREATED);
     }
 
     public function update($id)
@@ -71,10 +69,7 @@ class ExpensesController extends Controller
 
         $expense->update($this->request->all());
 
-        return response()->json([
-            'data' => $expense,
-            'status' => 'success',
-        ], 201);
+        return $this->success($expense, Response::HTTP_CREATED);
     }
 
     public function delete($id)
@@ -83,9 +78,6 @@ class ExpensesController extends Controller
 
         $expense->delete();
 
-        return response()->json([
-            'data' => [],
-            'status' => 'success',
-        ], 201);
+        return $this->success([], Response::HTTP_OK);
     }
 }
