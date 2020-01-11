@@ -10,32 +10,11 @@ class CategoriesControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /**
-     * @var string
-     */
-    private $token;
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->login();
-    }
-
-
-    public function login()
-    {
-        User::create([
-            'email' => 'test@test.com',
-            'password' => app()->make('hash')->make('secret'),
-        ]);
-
-        $response = $this->call('POST', '/auth/login', [
-            'email' => 'test@test.com',
-            'password' => 'secret',
-        ]);
-
-        $this->token = json_decode($response->getContent())->access_token;
     }
 
     /**
@@ -323,6 +302,10 @@ class CategoriesControllerTest extends TestCase
         $this->seeJsonContains([
             'data' => [],
             'status' => 'success',
+        ]);
+
+        $this->notSeeInDatabase('categories', [
+            'id' => $category->id,
         ]);
     }
 }
