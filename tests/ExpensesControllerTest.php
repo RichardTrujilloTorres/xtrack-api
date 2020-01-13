@@ -279,5 +279,4 @@ class ExpensesControllerTest extends TestCase
             'id' => $expenses[0]->id,
         ]);
     }
-
 }

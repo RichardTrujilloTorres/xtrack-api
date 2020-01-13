@@ -123,5 +123,4 @@ class Expense extends Model
             ->paginate($request->per_page)
         ;
     }
-
 }
