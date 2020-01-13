@@ -45,6 +45,7 @@ $router->group([
         $router->put('/{slug}', 'CategoriesController@update');
         $router->post('/', 'CategoriesController@store');
         $router->delete('/{slug}', 'CategoriesController@delete');
+        $router->get('/{slug}/expenses', 'CategoriesController@expenses');
     });
 });
 
