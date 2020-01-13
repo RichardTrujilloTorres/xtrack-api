@@ -59,21 +59,42 @@ class ExpensesController extends Controller
         /**
          * @var Expense $expense
          */
-        $expense = Expense::create(array_merge(
-            $this->request->all(),
-            ['category' => $category]
-        ));
+        $expense = Expense::create($this->request->only(['denomination', 'description']));
+        $expense->category()->associate($category);
+        $expense->save();
 
         return $this->success($expense, Response::HTTP_CREATED);
     }
 
     public function update($id)
     {
+        /**
+         * @var Expense $expense
+         */
         $expense = Expense::findOrFail($id);
 
-        $expense->update($this->request->all());
+        if ($this->request->has('category')) {
+            $this->updateExpenseCategory($expense);
+        }
+
+        $expense->update($this->request->only(['denomination', 'description']));
 
         return $this->success($expense, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @param Expense $expense
+     * @return bool
+     */
+    protected function updateExpenseCategory(Expense $expense)
+    {
+        /**
+         * @var Category $category
+         */
+        $category = Category::findOrFail(@$this->request->category['slug']);
+
+        $expense->category()->associate($category);
+        return $expense->save();
     }
 
     public function delete($id)

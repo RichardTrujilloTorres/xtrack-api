@@ -104,4 +104,22 @@ class CategoriesController extends Controller
 
         return $this->success([], Response::HTTP_CREATED);
     }
+
+    /**
+     * @param string $slug
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function expenses(string $slug, Request $request)
+    {
+        $category = Category::findOrFail($slug);
+
+        $perPage = $request->has('per_page')
+            ? $request->per_page
+            : 20;
+
+        $expenses = $category->expenses()->paginate($perPage);
+
+        return $this->success($expenses, Response::HTTP_OK);
+    }
 }

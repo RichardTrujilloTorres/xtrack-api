@@ -25,4 +25,9 @@ class Category extends Model
         'needed',
         'slug',
     ];
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

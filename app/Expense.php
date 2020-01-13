@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 
@@ -17,8 +18,12 @@ class Expense extends Model
      * @var array
      */
     protected $fillable = [
-        'denomination', 'description', 'category',
+        'denomination', 'description',
     ];
+
+    protected $hidden = ['category_slug', ];
+
+    protected $with = ['category', ];
 
     public function searchableAs()
     {
@@ -28,6 +33,11 @@ class Expense extends Model
     public function toSearchableArray()
     {
         return $this->toArray();
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**
