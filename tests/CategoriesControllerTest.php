@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Category;
+use App\Expense;
 use App\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
@@ -23,9 +25,9 @@ class CategoriesControllerTest extends TestCase
     public function index()
     {
         /**
-         * @var \App\Category[] $categories
+         * @var Category[] $categories
          */
-        $categories = factory(\App\Category::class, 10)->create();
+        $categories = factory(Category::class, 10)->create();
         $response = $this->json(
             'GET',
             '/api/categories',
@@ -48,9 +50,9 @@ class CategoriesControllerTest extends TestCase
     public function show()
     {
         /**
-         * @var \App\Category
+         * @var Category
          */
-        $category = factory(\App\Category::class)->create();
+        $category = factory(Category::class)->create();
         $response = $this->json(
             'GET',
             '/api/categories/' . $category->slug,
@@ -216,9 +218,9 @@ class CategoriesControllerTest extends TestCase
     public function updateReturns422OnAlreadyExistingCategoryName()
     {
         /**
-         * @var \App\Category $category
+         * @var Category $category
          */
-        $category = factory(\App\Category::class)->create();
+        $category = factory(Category::class)->create();
         $this->json(
             'PUT',
             '/api/categories/' . $category->slug,
@@ -239,9 +241,9 @@ class CategoriesControllerTest extends TestCase
     public function update()
     {
         /**
-         * @var \App\Category $category
+         * @var Category $category
          */
-        $category = factory(\App\Category::class)->create();
+        $category = factory(Category::class)->create();
         $this->json(
             'PUT',
             '/api/categories/' . $category->slug,
@@ -285,9 +287,9 @@ class CategoriesControllerTest extends TestCase
     public function deleteCategory()
     {
         /**
-         * @var \App\Category $category
+         * @var Category $category
          */
-        $category = factory(\App\Category::class)->create();
+        $category = factory(Category::class)->create();
         $this->json(
             'DELETE',
             '/api/categories/' . $category->slug,
@@ -306,6 +308,57 @@ class CategoriesControllerTest extends TestCase
 
         $this->notSeeInDatabase('categories', [
             'id' => $category->id,
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function expenses()
+    {
+        /**
+         * @var Category $category
+         */
+        $category = factory(Category::class, 1)->create()->first();
+
+        /**
+         * @var Expense[] $expenses
+         */
+        $expenses = factory(Expense::class, 10)->create();
+
+        $response = $this->json(
+            'PUT',
+            '/api/expenses/' . $expenses[0]->id,
+            [
+                'category' => [
+                    'slug' => $category->slug,
+                ]
+            ],
+            [
+                'Authorization' => 'Bearer ' . $this->token,
+            ]
+        );
+
+        $response->assertResponseStatus(201);
+        $this->seeInDatabase('expenses', [
+            'id' => $expenses[0]->id,
+            'category_slug' => $category->slug,
+        ]);
+
+        $response = $this->json(
+            'GET',
+            '/api/categories/' . $category->slug . '/expenses',
+            [],
+            [
+                'Authorization' => 'Bearer ' . $this->token,
+            ]
+        );
+
+        $response->assertResponseOk();
+        $response->seeJsonContains([
+            'description' => $expenses[0]->description,
+            'denomination' => (string)$expenses[0]->denomination,
+            'slug' => $category->slug,
         ]);
     }
 }

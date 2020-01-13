@@ -192,6 +192,48 @@ class ExpensesControllerTest extends TestCase
     /**
      * @test
      */
+    public function updateWithCategory()
+    {
+        /**
+         * @var Category[] $categories
+         */
+        $categories = factory(Category::class, 3)->create();
+
+        /**
+         * @var Expense[] $expenses
+         */
+        $expenses = factory(Expense::class, 10)->create();
+
+        $this->json(
+            'PUT',
+            '/api/expenses/' . $expenses[0]->id,
+            [
+                'description' => 'test expense --updated',
+                'category' => [
+                    'slug' => $categories[0]->slug,
+                ],
+            ],
+            [
+                'Authorization' => 'Bearer ' . $this->token,
+            ]
+        );
+
+        $this->assertResponseStatus(201);
+
+        $this->seeJsonContains([
+            'description' => 'test expense --updated',
+        ]);
+
+        $this->seeJsonContains([
+            'slug' => $categories[0]->slug,
+        ]);
+
+        $this->assertFalse($expenses[0]->category == $categories[0]->slug);
+    }
+
+    /**
+     * @test
+     */
     public function deleteReturn404OnNotFoundExpense()
     {
         $response = $this->json(
@@ -237,4 +279,5 @@ class ExpensesControllerTest extends TestCase
             'id' => $expenses[0]->id,
         ]);
     }
+
 }
