@@ -47,9 +47,9 @@ class Expense extends Model
     public function scopeByCategory($query)
     {
         return $query
-            ->select('category', DB::raw('SUM(denomination) as total'))
+            ->select('category_slug', DB::raw('SUM(denomination) as total'))
             ->where(DB::raw('YEAR(created_at)'), DB::raw('YEAR(CURRENT_DATE())'))
-            ->groupBy('category')
+            ->groupBy('category_slug')
             ;
     }
 
@@ -60,9 +60,9 @@ class Expense extends Model
     public function scopeByMonth($query)
     {
         return $query
-            ->select('category', DB::raw('SUM(denomination) as total'), DB::raw('MONTH(created_at) as month'))
+            ->select('category_slug', DB::raw('SUM(denomination) as total'), DB::raw('MONTH(created_at) as month'))
             ->where(DB::raw('YEAR(created_at)'), DB::raw('YEAR(CURRENT_DATE())'))
-            ->groupBy('category', 'month')
+            ->groupBy('category_slug', 'month')
             ;
     }
 
@@ -86,7 +86,7 @@ class Expense extends Model
     public function scopeHighest($query)
     {
             return $query
-                ->select('description', DB::raw('CAST(denomination AS DECIMAL(5,2)) as denomination'), 'category')
+                ->select('description', DB::raw('CAST(denomination AS DECIMAL(5,2)) as denomination'), 'category_slug')
                 ->where(DB::raw('MONTH(created_at)'), DB::raw('MONTH(CURRENT_DATE())'))
                 ->where(DB::raw('YEAR(created_at)'), DB::raw('YEAR(CURRENT_DATE())'))
                 ->orderBy('denomination', 'desc')
@@ -101,8 +101,8 @@ class Expense extends Model
     public function scopeHighestCategory($query)
     {
         return $query
-            ->select('category', DB::raw('SUM(denomination) as total'))
-            ->groupBy('category')
+            ->select('category_slug', DB::raw('SUM(denomination) as total'))
+            ->groupBy('category_slug')
             ->orderBy('total', 'desc')
             ->limit(1)
             ;
