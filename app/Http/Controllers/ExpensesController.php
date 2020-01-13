@@ -28,14 +28,7 @@ class ExpensesController extends Controller
 
     public function index()
     {
-        // TODO clean up
-        $sort = $this->request->sort;
-        $parts = explode('|', $sort);
-        $field = @$parts[0] ? @$parts[0] : 'id';
-        $direction = @$parts[1] ? @$parts[1] : 'asc';
-
-        // TODO repository
-        return Expense::orderBy($field, $direction)->paginate($this->request->per_page);
+        return Expense::datatable($this->request);
     }
 
     public function show($id)

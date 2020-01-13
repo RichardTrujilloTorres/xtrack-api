@@ -107,4 +107,21 @@ class Expense extends Model
             ->limit(1)
             ;
     }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public static function datatable(Request $request)
+    {
+        $sort = $request->sort;
+        $parts = explode('|', $sort);
+        $field = @$parts[0] ? @$parts[0] : 'id';
+        $direction = @$parts[1] ? @$parts[1] : 'asc';
+
+        return Expense::orderBy($field, $direction)
+            ->paginate($request->per_page)
+        ;
+    }
+
 }
