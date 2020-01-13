@@ -47,6 +47,10 @@
           "curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar",
           "php phpcbf.phar --standard=PSR2 app tests",
           "php phpcs.phar --standard=PSR2 --report=full app tests"
+        ],
+        "phpcs": [
+            "./vendor/bin/phpcbf --standard=PSR2 app tests",
+            "./vendor/bin/phpcs --standard=PSR2 --report=full app tests"
         ]
     },
     "config": {
