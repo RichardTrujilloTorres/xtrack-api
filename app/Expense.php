@@ -75,7 +75,7 @@ class Expense extends Model
         return $query
             ->select(DB::raw('DATE(created_at) as day'), DB::raw('SUM(denomination) as total'), 'category_slug')
             ->where(DB::raw('YEAR(created_at)'), DB::raw('YEAR(CURRENT_DATE())'))
-            ->groupBy('day')
+            ->groupBy('day', 'category_slug')
             ;
     }
 
