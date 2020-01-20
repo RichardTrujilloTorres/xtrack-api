@@ -16,7 +16,7 @@ It's compose of basic CRUD elements as well as the some relevant
 stats.
 
 ## Demo
-See in action at https://xtrack-client.web.app
+See it in action at https://xtrack-client.web.app
 
 
 ## Install & Build
