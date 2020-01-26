@@ -5,8 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Category
- * @package App
+ * Class Category.
  */
 class Category extends Model
 {

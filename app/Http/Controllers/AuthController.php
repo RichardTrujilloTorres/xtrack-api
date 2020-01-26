@@ -32,7 +32,7 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = $this->request->only(['email', 'password']);
-        if (! $token = app('auth')->attempt($credentials)) {
+        if (!$token = app('auth')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -64,7 +64,7 @@ class AuthController extends Controller
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -72,8 +72,8 @@ class AuthController extends Controller
     {
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => app('auth')->factory()->getTTL() * 60,
+            'token_type'   => 'bearer',
+            'expires_in'   => app('auth')->factory()->getTTL() * 60,
         ]);
     }
 

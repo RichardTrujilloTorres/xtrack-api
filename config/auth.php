@@ -11,13 +11,13 @@ return [
     |
     */
     'defaults' => [
-        'guard' => 'api',
+        'guard'     => 'api',
         'passwords' => 'users',
     ],
 
     'guards' => [
         'api' => [
-            'driver' => 'jwt',
+            'driver'   => 'jwt',
             'provider' => 'users',
         ],
     ],
@@ -27,6 +27,6 @@ return [
             'driver' => 'eloquent',
             // 'model'  => app('config')->get('jwt.user'),
             'model'  => \App\User::class,
-        ]
+        ],
     ],
 ];

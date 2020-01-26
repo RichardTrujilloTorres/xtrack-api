@@ -8,8 +8,7 @@ use Carbon\Carbon;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 
 /**
- * Class StatsControllerTest
- * @package Tests
+ * Class StatsControllerTest.
  */
 class StatsControllerTest extends TestCase
 {
@@ -28,12 +27,12 @@ class StatsControllerTest extends TestCase
     public function byCategory()
     {
         /**
-         * @var Category[] $categories
+         * @var Category[]
          */
         $categories = factory(Category::class, 3)->create();
 
         /**
-         * @var Expense[] $expenses
+         * @var Expense[]
          */
         $expenses = factory(Expense::class, 10)->create();
 
@@ -48,7 +47,7 @@ class StatsControllerTest extends TestCase
             '/api/stats/by-category',
             [],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -68,7 +67,7 @@ class StatsControllerTest extends TestCase
     public function byMonth()
     {
         /**
-         * @var Expense[] $expenses
+         * @var Expense[]
          */
         $expenses = factory(Expense::class, 5)->create();
 
@@ -76,7 +75,7 @@ class StatsControllerTest extends TestCase
         $expenses[0]->save();
         $expenses[1]->save();
         /**
-         * @var int $totalJanuaryExpenses
+         * @var int
          */
         $totalJanuaryExpenses = $expenses[0]->denomination + $expenses[1]->denomination;
 
@@ -85,20 +84,19 @@ class StatsControllerTest extends TestCase
         $expenses[3]->save();
 
         /**
-         * @var int $totalFebruaryExpenses
+         * @var int
          */
         $totalFebruaryExpenses = $expenses[2]->denomination + $expenses[3]->denomination;
 
         $expenses[4]->created_at = Carbon::now()->setMonth(3);
         $expenses[4]->save();
 
-
         $response = $this->json(
             'GET',
             '/api/stats/by-month',
             [],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -128,13 +126,13 @@ class StatsControllerTest extends TestCase
     public function byDay()
     {
         /**
-         * @var Expense[] $expenses
+         * @var Expense[]
          */
         $expenses = factory(Expense::class, 3)->create();
         $total = $expenses[0]->denomination + $expenses[1]->denomination + $expenses[2]->denomination;
 
         /**
-         * @var Expense[] $tomorrowExpenses
+         * @var Expense[]
          */
         $tomorrowExpenses = factory(Expense::class, 3)->create();
         $tomorrowExpenses[0]->created_at =
@@ -152,7 +150,7 @@ class StatsControllerTest extends TestCase
             '/api/stats/by-day',
             [],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -173,12 +171,12 @@ class StatsControllerTest extends TestCase
     public function monthlySummary()
     {
         /**
-         * @var Expense[] $expenses
+         * @var Expense[]
          */
         $expenses = factory(Expense::class, 3)->create();
 
         /**
-         * @var Category[] $categories
+         * @var Category[]
          */
         $categories = factory(Category::class, 2)->create();
 
@@ -197,7 +195,7 @@ class StatsControllerTest extends TestCase
             '/api/stats/monthly-summary',
             [],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
