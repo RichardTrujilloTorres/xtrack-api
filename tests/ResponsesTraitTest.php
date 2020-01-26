@@ -24,22 +24,20 @@ class ResponsesTraitTest extends TestCase
         $this->assertTrue($response instanceof JsonResponse);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals($response->getContent(), json_encode([
-            'data' => $data,
-            'status' => 'success',
+            'data'    => $data,
+            'status'  => 'success',
             'message' => '',
         ]));
-
 
         $response = $this->success($data, 200, $message);
 
         $this->assertTrue($response instanceof JsonResponse);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals($response->getContent(), json_encode([
-            'data' => $data,
-            'status' => 'success',
+            'data'    => $data,
+            'status'  => 'success',
             'message' => $message,
         ]));
-
 
         $response = $this->success($message, 201);
         $this->assertEquals(201, $response->getStatusCode());
@@ -59,8 +57,8 @@ class ResponsesTraitTest extends TestCase
         $this->assertTrue($response instanceof JsonResponse);
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals($response->getContent(), json_encode([
-            'data' => $data,
-            'status' => 'error',
+            'data'    => $data,
+            'status'  => 'error',
             'message' => $message,
         ]));
 

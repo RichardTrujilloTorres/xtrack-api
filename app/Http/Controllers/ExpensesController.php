@@ -19,6 +19,7 @@ class ExpensesController extends Controller
 
     /**
      * ExpensesController constructor.
+     *
      * @param Request $request
      */
     public function __construct(Request $request)
@@ -45,12 +46,12 @@ class ExpensesController extends Controller
         ]);
 
         /**
-         * @var Category $category
+         * @var Category
          */
         $category = Category::findOrFail(@$this->request->category['slug']);
 
         /**
-         * @var Expense $expense
+         * @var Expense
          */
         $expense = Expense::create($this->request->only(['denomination', 'description']));
         $expense->category()->associate($category);
@@ -62,7 +63,7 @@ class ExpensesController extends Controller
     public function update($id)
     {
         /**
-         * @var Expense $expense
+         * @var Expense
          */
         $expense = Expense::findOrFail($id);
 
@@ -77,16 +78,18 @@ class ExpensesController extends Controller
 
     /**
      * @param Expense $expense
+     *
      * @return bool
      */
     protected function updateExpenseCategory(Expense $expense)
     {
         /**
-         * @var Category $category
+         * @var Category
          */
         $category = Category::findOrFail(@$this->request->category['slug']);
 
         $expense->category()->associate($category);
+
         return $expense->save();
     }
 
