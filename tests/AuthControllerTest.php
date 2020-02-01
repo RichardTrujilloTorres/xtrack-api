@@ -4,7 +4,6 @@ namespace Tests;
 
 use App\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class AuthControllerTest extends TestCase
 {
@@ -20,7 +19,7 @@ class AuthControllerTest extends TestCase
         parent::setUp();
 
         $this->user = User::create([
-            'email' => 'test@test.com',
+            'email'    => 'test@test.com',
             'password' => app()->make('hash')->make('secret'),
         ]);
     }
@@ -31,7 +30,7 @@ class AuthControllerTest extends TestCase
     public function returnsUnauthorizedErrorOnInvalidLogin()
     {
         $this->call('POST', '/auth/login', [
-            'email' => $this->user->email,
+            'email'    => $this->user->email,
             'password' => 'invalid-password',
         ]);
 
@@ -58,7 +57,7 @@ class AuthControllerTest extends TestCase
     public function me()
     {
         $this->call('POST', '/auth/login', [
-            'email' => $this->user->email,
+            'email'    => $this->user->email,
             'password' => 'secret',
         ]);
 
@@ -72,7 +71,7 @@ class AuthControllerTest extends TestCase
     public function login()
     {
         $this->call('POST', '/auth/login', [
-            'email' => $this->user->email,
+            'email'    => $this->user->email,
             'password' => 'secret',
         ]);
 
@@ -89,7 +88,7 @@ class AuthControllerTest extends TestCase
     public function logout()
     {
         $this->call('POST', '/auth/login', [
-            'email' => $this->user->email,
+            'email'    => $this->user->email,
             'password' => 'secret',
         ]);
 
@@ -99,8 +98,8 @@ class AuthControllerTest extends TestCase
 
         $this->call('POST', '/auth/logout', [], [
             [
-            'Authorization' => 'Bearer ' . $content['access_token'],
-            ]
+                'Authorization' => 'Bearer '.$content['access_token'],
+            ],
         ]);
 
         $this->assertResponseOk();
@@ -112,7 +111,7 @@ class AuthControllerTest extends TestCase
     public function refresh()
     {
         $this->call('POST', '/auth/login', [
-            'email' => $this->user->email,
+            'email'    => $this->user->email,
             'password' => 'secret',
         ]);
 
@@ -123,8 +122,8 @@ class AuthControllerTest extends TestCase
 
         $this->call('POST', '/auth/refresh', [], [
             [
-                'Authorization' => 'Bearer ' . $token,
-            ]
+                'Authorization' => 'Bearer '.$token,
+            ],
         ]);
 
         $this->assertResponseOk();

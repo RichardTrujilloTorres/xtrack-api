@@ -23,7 +23,7 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withFacades();
 $app->withFacades(true, [
-    \Tymon\JWTAuth\Facades\JWTAuth::class => 'JWTAuth',
+    \Tymon\JWTAuth\Facades\JWTAuth::class    => 'JWTAuth',
     \Tymon\JWTAuth\Facades\JWTFactory::class => 'JWTFactory',
 ]);
 
@@ -84,7 +84,7 @@ $app->routeMiddleware([
 */
 
 // 'app.path' fix:
-$app->instance('path.config', app()->basePath() . DIRECTORY_SEPARATOR . 'config');
+$app->instance('path.config', app()->basePath().DIRECTORY_SEPARATOR.'config');
 
 // $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
@@ -93,7 +93,6 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(\Barryvdh\Cors\ServiceProvider::class);
 $app->register(\Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(\Laravel\Scout\ScoutServiceProvider::class);
-
 
 /*
 |--------------------------------------------------------------------------

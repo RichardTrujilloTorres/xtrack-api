@@ -6,8 +6,7 @@ use App\Expense;
 use App\Http\Traits\ResponsesTrait;
 
 /**
- * Class StatsController
- * @package App\Http\Controllers
+ * Class StatsController.
  */
 class StatsController extends Controller
 {
@@ -53,7 +52,7 @@ class StatsController extends Controller
         $highestCategory = Expense::highestCategory()->get()[0];
 
         $data = [
-            'highestExpense' => $highestExpense,
+            'highestExpense'  => $highestExpense,
             'highestCategory' => $highestCategory,
         ];
 

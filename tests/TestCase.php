@@ -21,16 +21,15 @@ abstract class TestCase extends \Laravel\Lumen\Testing\TestCase
         return require __DIR__.'/../bootstrap/app.php';
     }
 
-
     public function login()
     {
         User::create([
-            'email' => 'test@test.com',
+            'email'    => 'test@test.com',
             'password' => app()->make('hash')->make('secret'),
         ]);
 
         $response = $this->call('POST', '/auth/login', [
-            'email' => 'test@test.com',
+            'email'    => 'test@test.com',
             'password' => 'secret',
         ]);
 
