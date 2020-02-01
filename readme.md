@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/RichardTrujilloTorres/xtrack-api.svg?branch=master)](https://travis-ci.org/RichardTrujilloTorres/xtrack-api)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 [![codecov](https://codecov.io/gh/RichardTrujilloTorres/xtrack-api/branch/master/graph/badge.svg)](https://codecov.io/gh/RichardTrujilloTorres/xtrack-api)
-
+[![StyleCI](https://github.styleci.io/repos/181162909/shield?branch=master)]
 
 The xTrack utility RESTFul Lumen API.
 
