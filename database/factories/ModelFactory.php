@@ -13,24 +13,24 @@
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'name'  => $faker->name,
         'email' => $faker->email,
     ];
 });
 
 $factory->define(\App\Category::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'name'        => $faker->name,
         'description' => $faker->sentence,
-        'slug' => $faker->slug,
-        'needed' => $faker->boolean,
+        'slug'        => $faker->slug,
+        'needed'      => $faker->boolean,
     ];
 });
 
 $factory->define(\App\Expense::class, function (Faker\Generator $faker) {
     return [
         'denomination' => $faker->numberBetween(1, 100),
-        'description' => $faker->sentence,
-//        'category' => $faker->numberBetween(1, 3),
+        'description'  => $faker->sentence,
+        //        'category' => $faker->numberBetween(1, 3),
     ];
 });

@@ -9,8 +9,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class CategoriesController
- * @package App\Http\Controllers
+ * Class CategoriesController.
  */
 class CategoriesController extends Controller
 {
@@ -23,6 +22,7 @@ class CategoriesController extends Controller
 
     /**
      * CategoriesController constructor.
+     *
      * @param Request $request
      */
     public function __construct(Request $request)
@@ -37,12 +37,12 @@ class CategoriesController extends Controller
     {
         $categories = Category::all();
 
-
         return $this->success($categories->toArray());
     }
 
     /**
      * @param string $slug
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $slug)
@@ -53,8 +53,9 @@ class CategoriesController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store()
     {
@@ -62,7 +63,7 @@ class CategoriesController extends Controller
             'name' => 'required|unique:categories',
         ]);
 
-        $slug = $this->request->has('slug') && ! empty($this->request->get('slug'))
+        $slug = $this->request->has('slug') && !empty($this->request->get('slug'))
                 ? $this->request->get('slug')
                 : Str::slug($this->request->get('name'));
 
@@ -76,8 +77,10 @@ class CategoriesController extends Controller
 
     /**
      * @param string $slug
-     * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(string $slug)
     {
@@ -94,6 +97,7 @@ class CategoriesController extends Controller
 
     /**
      * @param string $slug
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(string $slug)
@@ -106,8 +110,9 @@ class CategoriesController extends Controller
     }
 
     /**
-     * @param string $slug
+     * @param string  $slug
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function expenses(string $slug, Request $request)

@@ -5,11 +5,9 @@ namespace Tests;
 use App\Category;
 use App\Expense;
 use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
 
 /**
- * Class ExpensesControllerTest
- * @package Tests
+ * Class ExpensesControllerTest.
  */
 class ExpensesControllerTest extends TestCase
 {
@@ -29,7 +27,7 @@ class ExpensesControllerTest extends TestCase
     {
         factory(Category::class, 3)->create();
         /**
-         * @var Expense[] $expenses
+         * @var Expense[]
          */
         $expenses = factory(Expense::class, 10)->create();
         $response = $this->json(
@@ -37,7 +35,7 @@ class ExpensesControllerTest extends TestCase
             '/api/expenses',
             [],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -54,22 +52,22 @@ class ExpensesControllerTest extends TestCase
     public function show()
     {
         /**
-         * @var Expense[] $expenses
+         * @var Expense[]
          */
         $expenses = factory(Expense::class, 10)->create();
         $response = $this->json(
             'GET',
-            '/api/expenses/' . $expenses[0]->id,
+            '/api/expenses/'.$expenses[0]->id,
             [],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
         $response->assertResponseOk();
 
         $this->seeJsonContains([
-            'denomination' => (string)$expenses[0]->denomination,
+            'denomination' => (string) $expenses[0]->denomination,
         ]);
     }
 
@@ -83,7 +81,7 @@ class ExpensesControllerTest extends TestCase
             '/api/expenses/999999',
             [],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -103,7 +101,7 @@ class ExpensesControllerTest extends TestCase
             '/api/expenses',
             [],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -117,14 +115,14 @@ class ExpensesControllerTest extends TestCase
     public function store()
     {
         /**
-         * @var Category[] $categories
+         * @var Category[]
          */
         $categories = factory(Category::class, 3)->create();
 
         $this->json('POST', '/api/expenses', [
             'denomination' => 13.33,
-            'description' => 'test expense',
-            'category' => $categories[0]->toArray(),
+            'description'  => 'test expense',
+            'category'     => $categories[0]->toArray(),
         ]);
 
         $this
@@ -132,7 +130,7 @@ class ExpensesControllerTest extends TestCase
 
         $this->seeJsonContains([
             'denomination' => 13.33,
-            'description' => 'test expense',
+            'description'  => 'test expense',
         ]);
 
         $this->seeJsonContains([
@@ -152,7 +150,7 @@ class ExpensesControllerTest extends TestCase
                 'description' => 'test expense --updated',
             ],
             [
-            'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -166,19 +164,18 @@ class ExpensesControllerTest extends TestCase
     public function update()
     {
         /**
-         * @var Expense[] $expenses
+         * @var Expense[]
          */
         $expenses = factory(Expense::class, 10)->create();
 
-
         $this->json(
             'PUT',
-            '/api/expenses/' . $expenses[0]->id,
+            '/api/expenses/'.$expenses[0]->id,
             [
                 'description' => 'test expense --updated',
             ],
             [
-            'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -195,26 +192,26 @@ class ExpensesControllerTest extends TestCase
     public function updateWithCategory()
     {
         /**
-         * @var Category[] $categories
+         * @var Category[]
          */
         $categories = factory(Category::class, 3)->create();
 
         /**
-         * @var Expense[] $expenses
+         * @var Expense[]
          */
         $expenses = factory(Expense::class, 10)->create();
 
         $this->json(
             'PUT',
-            '/api/expenses/' . $expenses[0]->id,
+            '/api/expenses/'.$expenses[0]->id,
             [
                 'description' => 'test expense --updated',
-                'category' => [
+                'category'    => [
                     'slug' => $categories[0]->slug,
                 ],
             ],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -241,7 +238,7 @@ class ExpensesControllerTest extends TestCase
             '/api/expenses/999999',
             [],
             [
-            'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -255,23 +252,22 @@ class ExpensesControllerTest extends TestCase
     public function deleteExpense()
     {
         /**
-         * @var Expense[] $expenses
+         * @var Expense[]
          */
         $expenses = factory(Expense::class, 10)->create();
 
         $this->json(
             'DELETE',
-            '/api/expenses/' . $expenses[0]->id,
+            '/api/expenses/'.$expenses[0]->id,
             [],
             [
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
-
         $this->assertResponseStatus(201);
         $this->seeJsonContains([
-            'data' => [],
+            'data'   => [],
             'status' => 'success',
         ]);
 
